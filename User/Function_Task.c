@@ -78,7 +78,7 @@ void Task_LED()
 void Task_BMP(void *pvParameters)
 {
 	
-		BaseType_t status_Power;
+//		BaseType_t status_Power;
 		
 		double BMP_Pressure;
 		double BMP_Temperature, altitude;
@@ -153,12 +153,15 @@ int Task_MPU6050()
 
 				MPU_Get_data();
 				mpu_dmp_get_data(&imu.pitch, &imu.roll, &imu.yaw);
-				taskENTER_CRITICAL();
-				printf("\r\n pitch:%.1f\t roll:%.1f\t yaw:%.1f \r\n", imu.pitch,imu.roll, imu.yaw);
-				printf("\r\n GyroX:%d\t GyroY:%d\t GryoZ:%d\r\n", MPU6050.gyroX, MPU6050.gyroY,MPU6050.gyroZ);
-//				printf("\r\n pitch:%.1f\t roll:%.1f\t yaw:%.1f \r\n", Angle.pitch,Angle.roll, Angle.yaw);
-				taskEXIT_CRITICAL();
-				delay_ms(6);
+				APP_Fligh_PID_Control();
+				APP_Flight_Motor_Control();
+			
+//				taskENTER_CRITICAL();
+//				printf("\r\n pitch:%.1f\t roll:%.1f\t yaw:%.1f \r\n", imu.pitch,imu.roll, imu.yaw);
+//				printf("\r\n GyroX:%d\t GyroY:%d\t GryoZ:%d\r\n", MPU6050.gyroX, MPU6050.gyroY,MPU6050.gyroZ);
+////				printf("\r\n pitch:%.1f\t roll:%.1f\t yaw:%.1f \r\n", Angle.pitch,Angle.roll, Angle.yaw);
+//				taskEXIT_CRITICAL();
+//				delay_ms(6);
 				vTaskDelay(pdMS_TO_TICKS(20));
 
 				
@@ -256,7 +259,7 @@ void Task_MOTOR(void)
 
 void Task_NRF_RX(void *pvParameters)
 {
-		u8 i;
+//		u8 i;
 		char arr[11];
 		char rx_arr[10];
     while (1)

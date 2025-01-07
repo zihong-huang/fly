@@ -70,8 +70,9 @@ int main(void)
 	else printf("\r\nYes:%d\r\n", nrf_flag);
 	PWM_Init(1000-1, 72-1);
 	Motor_Init();
-	
-	LED_State_Choice(4);
+	unlock = 1;
+	App_PID_Param_Init();
+	LED_State_Choice(3);
 //	PWM_SetDutyCycle(150, 150, 150, 150);
 	
 
@@ -121,12 +122,12 @@ int main(void)
 						(UBaseType_t)			START_TASK_NRF_RX,
 						(TaskHandle_t *)	&Task_NRF_RX_Handle );
 
-	xTaskCreate((TaskFunction_t)	Task_MOTOR,					//创建motor线程
-						(char *)					"Task_MOTOR",
-						(uint16_t)				START_MOTOR_SIZE,
-						(void *) 					NULL,
-						(UBaseType_t)			START_TASK_MOTOR,
-						(TaskHandle_t *)	&Task_MOTOR_Handle );
+//	xTaskCreate((TaskFunction_t)	Task_MOTOR,					//创建motor线程
+//						(char *)					"Task_MOTOR",
+//						(uint16_t)				START_MOTOR_SIZE,
+//						(void *) 					NULL,
+//						(UBaseType_t)			START_TASK_MOTOR,
+//						(TaskHandle_t *)	&Task_MOTOR_Handle );
 					
 //	xTaskCreate((TaskFunction_t)	Cpu_task,					//创建CPU线程
 //						(char *)					"Task_Cpu",

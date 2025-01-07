@@ -10,7 +10,7 @@
 #define WAITTING1 0
 #define WAITTING2 1
 #define PROCESS 2
-#define unlock  4
+
 
 #define rx_dvr_pwm4 4
 
@@ -47,10 +47,14 @@ void floatToHexArray(float num, uint8_t hexArray[4]);
 
 
 void Get_posture(void);
-void APP_Fligh_PID_Control();
+
+void APP_Fligh_PID_Control(void);
+void APP_Flight_Motor_Control(void);
+void App_PID_Param_Init(void);
 
 void Analyze_data(char Analyze_arr[]);
 void clamp(int *target, int min_val, int max_val);
 
+extern u8 unlock;
 
 #endif

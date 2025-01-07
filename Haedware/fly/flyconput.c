@@ -13,6 +13,7 @@ PidProject *pids[] = {&pidPitch, &pidRoll, &pidYaw, &pidRateX, &pidRateY, &pidRa
 DVR RX_DVR;
 Rx_Key_state Rx_Key;
 
+u8 unlock = 0;
 
 
 int motor1 = 0;		//左前
@@ -45,8 +46,7 @@ void APP_Fligh_PID_Control(void)
 		switch(status)
 		{
 			case WAITTING1:
-		
-			if(unlock)
+						if(unlock == 1)
 						{
 								status = WAITTING2;
 						}
@@ -103,16 +103,23 @@ void APP_Fligh_PID_Control(void)
 **@Data	      : 2024-11-16
 ******************************** END *********************************/
 
-void APP_Flight_Motor_Control()
+void APP_Flight_Motor_Control(void)
 {
-		motor1 = motor2 = motor3 = motor4 = 0;
 		
-		static u8 status = WAITTING1;
+		
+		static u8 status;
+		if(Rx_Key.key7_flasg == 1)
+		{
+				status = WAITTING1;
+//				Rx_Key.key7_flasg = 0;
+				LED_State_Choice(2);
+		}
 		switch(status)
 		{
 			//判断解锁然后进入阶段二
 			case WAITTING1:
-
+						motor1 = motor2 = motor3 = motor4 = 0;
+						status = WAITTING2;
 						break;
 			//判断油门动了 > 1100进入控制
 			case WAITTING2:
@@ -128,7 +135,7 @@ void APP_Flight_Motor_Control()
 						motor1 = RX_DVR.thorttle - 1000;
 						motor2 = RX_DVR.DvrX - 1000;
 						motor3 = RX_DVR.DvrY - 1000;
-						motor4 = 0;
+						motor4 = 500;
 						
 						if(RX_DVR.thorttle <	1050)
 						{
@@ -140,10 +147,10 @@ void APP_Flight_Motor_Control()
 						clamp(&motor3, 0, 900);
 						clamp(&motor4, 0, 900);
 						
-						motor1 +=	-pidRateX.out - pidRateY.out;	//右前
-						motor2 +=	+pidRateX.out - pidRateY.out;	//左前
-						motor3 += -pidRateX.out + pidRateY.out;	//右后
-						motor4 +=	+pidRateX.out + pidRateY.out;	//左后
+						motor1 +=	-pidRateX.out - pidRateY.out - pidRateZ.out;	//右前
+						motor2 +=	+pidRateX.out - pidRateY.out + pidRateZ.out;	//左前
+						motor3 += -pidRateX.out + pidRateY.out + pidRateZ.out;	//右后
+						motor4 +=	+pidRateX.out + pidRateY.out - pidRateZ.out;	//左后
 						
 						clamp(&motor1, 0, 1000);
 						clamp(&motor2, 0, 1000);
@@ -155,6 +162,40 @@ void APP_Flight_Motor_Control()
 						break;
 			
 		}
+		
+		PWM_SetDutyCycle( motor4, motor2, motor3, motor1);
+}
+
+void App_PID_Param_Init(void)
+{
+		//内环	
+		pidRateX.kp = 0.0f;
+		pidRateY.kp = 0.0f;
+		pidRateZ.kp = 0.0f;
+
+		pidRateX.ki = 0.0f;
+		pidRateY.ki = 0.0f;
+		pidRateZ.ki = 0.0f;
+
+		pidRateX.kd = 0.0f;
+		pidRateY.kd = 0.0f;
+		pidRateZ.kd = 0.0f;
+		
+		//外环
+		pidPitch.kp = 0.0f;
+		pidRoll.kp  = 0.0f;
+		pidYaw.kp   = 0.0f;
+	
+		pidPitch.ki = 0.0f;
+		pidRoll.ki  = 0.0f;
+		pidYaw.ki   = 0.0f;
+		
+		pidPitch.kd = 0.0f;
+		pidRoll.kd  = 0.0f;
+		pidYaw.kd   = 0.0f;
+	
+	
+	
 }
 
 
@@ -199,7 +240,7 @@ void Analyze_data(char Analyze_arr[])
 				KEY_analyze[0] = Analyze_arr[8];  // 高位字节
 				if(KEY_analyze[0] == 0x06)
 				Rx_Key.key7_flasg = 1;
-				else Rx_Key.key7_flasg = 0;
+				
 
 				printf("receive_sucessful\r\n");
 				printf("\r\n thr:%d, pit:%d. rol:%d \r\n",RX_DVR.thorttle,RX_DVR.DvrX, RX_DVR.DvrY);
