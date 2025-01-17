@@ -18,6 +18,7 @@ typedef struct{
 		u16 thorttle;
 		u16 DvrX;
 		u16 DvrY;
+		u16 DvrZ;
 }DVR;
 
 typedef struct Key_state{

@@ -135,7 +135,7 @@ void APP_Flight_Motor_Control(void)
 						motor1 = RX_DVR.thorttle - 1000;
 						motor2 = RX_DVR.DvrX - 1000;
 						motor3 = RX_DVR.DvrY - 1000;
-						motor4 = 500;
+						motor4 = RX_DVR.DvrZ - 1000;
 						
 						if(RX_DVR.thorttle <	1050)
 						{
@@ -215,10 +215,11 @@ void Analyze_data(char Analyze_arr[])
 		char Tho_analyze[2];	
 		char DVRX_analyze[2];	
 		char DVRY_analyze[2];	
+		char DVRZ_analyze[2];	
 		char KEY_analyze[2];	
 		
 		//帧头判断,检查帧尾
-		if(Analyze_arr[0] == 0xFD && Analyze_arr[1] == 0xFD && Analyze_arr[9] == 0xFE)
+		if(Analyze_arr[0] == 0xFD && Analyze_arr[1] == 0xFD && Analyze_arr[11] == 0xFE)
 		{
 				/* THR */
 				Tho_analyze[0] = Analyze_arr[2];  // 高位字节
@@ -235,9 +236,12 @@ void Analyze_data(char Analyze_arr[])
 				DVRY_analyze[1] = Analyze_arr[7];
 				//写入DVRY数据
 				RX_DVR.DvrY = (DVRY_analyze[0] << 8) | (DVRY_analyze[1]);
+				/*YAW*/
+				DVRZ_analyze[0] = Analyze_arr[8];  // 高位字节
+				DVRZ_analyze[1] = Analyze_arr[9];
 				/* KEY */
 				// 提取数据并存储到新的数组中
-				KEY_analyze[0] = Analyze_arr[8];  // 高位字节
+				KEY_analyze[0] = Analyze_arr[10];  // 高位字节
 				if(KEY_analyze[0] == 0x06)
 				Rx_Key.key7_flasg = 1;
 				

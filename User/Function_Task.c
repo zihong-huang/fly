@@ -260,8 +260,8 @@ void Task_MOTOR(void)
 void Task_NRF_RX(void *pvParameters)
 {
 //		u8 i;
-		char arr[11];
-		char rx_arr[10];
+		char arr[13];
+		char rx_arr[12];
     while (1)
     {
 			
@@ -279,7 +279,7 @@ void Task_NRF_RX(void *pvParameters)
 
                 // 提取有效数据（跳过头部）
 
-                memcpy(rx_arr, &arr[1], 10);
+                memcpy(rx_arr, &arr[1], 12);
 
                 // 数据分析
                 Analyze_data(rx_arr);

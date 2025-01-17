@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Tue Jan 07 16:15:06 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Sat Jan 18 01:44:01 2025
 <BR><P>
 <H3>Maximum Stack Usage =        328 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -680,7 +680,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_MPU6050
 </UL>
 
-<P><STRONG><a name="[6c]"></a>APP_Flight_Motor_Control</STRONG> (Thumb, 398 bytes, Stack size 24 bytes, flyconput.o(i.APP_Flight_Motor_Control))
+<P><STRONG><a name="[6c]"></a>APP_Flight_Motor_Control</STRONG> (Thumb, 400 bytes, Stack size 24 bytes, flyconput.o(i.APP_Flight_Motor_Control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = APP_Flight_Motor_Control &rArr; LED_State_Choice &rArr; LED_State4 &rArr; delay_ms &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetDutyCycle
@@ -694,8 +694,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_MPU6050
 </UL>
 
-<P><STRONG><a name="[71]"></a>Analyze_data</STRONG> (Thumb, 140 bytes, Stack size 24 bytes, flyconput.o(i.Analyze_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = Analyze_data &rArr; __2printf
+<P><STRONG><a name="[71]"></a>Analyze_data</STRONG> (Thumb, 154 bytes, Stack size 32 bytes, flyconput.o(i.Analyze_data))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Analyze_data &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
@@ -1558,8 +1558,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
-<P><STRONG><a name="[3a]"></a>Task_NRF_RX</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, function_task.o(i.Task_NRF_RX))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Task_NRF_RX &rArr; NRF24L01_RxPacket &rArr; NRF24L01_Read_Buf &rArr; SPI_ReadWriteByte &rArr; Delay
+<P><STRONG><a name="[3a]"></a>Task_NRF_RX</STRONG> (Thumb, 70 bytes, Stack size 32 bytes, function_task.o(i.Task_NRF_RX))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Task_NRF_RX &rArr; NRF24L01_RxPacket &rArr; NRF24L01_Read_Buf &rArr; SPI_ReadWriteByte &rArr; Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RX_Mode
